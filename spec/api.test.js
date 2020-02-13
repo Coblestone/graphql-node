@@ -61,9 +61,12 @@ describe("GET /", () => {
     response = await request(app)
       .post("/graphql")
       .send({ query: query_string });
-    console.log(response.body.data.author.posts);
+    // console.log(response.body.data.author.posts);
     expect(response.body.data.author.name).toBe("Xavier Decuyper");
     expect(response.body.data.author.posts[0].title).toBe("My first blog post");
+    expect(response.body.data.author.posts[1].title).toBe(
+      "My second blog post"
+    );
   });
 
   test("Verify we can get just one post", async () => {
