@@ -12,7 +12,6 @@ describe("GET /", () => {
     response = await request(app)
       .post("/graphql")
       .send({ query: query_string });
-    console.log(response.body.data);
     expect(response.body.data.posts[0].title).toBe("My first blog post");
     console.log(response.body);
   });
@@ -20,9 +19,12 @@ describe("GET /", () => {
   test("Verify that an author is related to a post", async () => {
     const query_string = `{
       posts{
+        id,
         title,
+        content,
         author,
         related {
+          id,
           name,
           email
         }

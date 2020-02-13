@@ -6,10 +6,8 @@ import {
 } from "graphql";
 import { fakeDatabase } from "./FakeDatabase";
 
-//const authors = FakeDatabase.author;
-const posts = fakeDatabase.getBlogPosts();
 const authors = fakeDatabase.getAuthors();
-
+const posts = fakeDatabase.getBlogPosts();
 
 async function testAsyncFunction(parent) {
   return authors.find(author => author.id === parent.author);
@@ -32,13 +30,12 @@ const PostType = new GraphQLObjectType({
     content: { type: GraphQLString },
     author: { type: GraphQLString },
     related: {
-      type: new GraphQLList(AuthorType),
+      type: AuthorType,
       async resolve(parent, args) {
         const queryResult = await testAsyncFunction(parent);
-        console.log('This worked ! ');
+        console.log("Displayed after return");
         return queryResult;
       }
-
     }
   })
 });
