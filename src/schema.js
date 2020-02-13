@@ -33,7 +33,7 @@ const PostType = new GraphQLObjectType({
       type: AuthorType,
       async resolve(parent, args) {
         const queryResult = await testAsyncFunction(parent);
-        console.log("Displayed after return");
+        // console.log("Displayed after return");
         return queryResult;
       }
     }
