@@ -43,6 +43,11 @@ class FakeDatabase{
         return this.blogPosts;
     }
 
+    getAuthors(){
+        return this.authors;
+    }
+
+    
     getBlogPost(id) {
         return this.blogPosts.filter((post) => {
             return post.id === id;
