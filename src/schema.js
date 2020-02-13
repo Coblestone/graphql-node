@@ -2,7 +2,8 @@ import {
   GraphQLSchema,
   GraphQLObjectType,
   GraphQLString,
-  GraphQLList
+  GraphQLList,
+  GraphQLInt
 } from "graphql";
 import { fakeDatabase } from "./FakeDatabase";
 
@@ -25,7 +26,7 @@ const AuthorType = new GraphQLObjectType({
 const PostType = new GraphQLObjectType({
   name: "Post",
   fields: () => ({
-    id: { type: GraphQLString },
+    id: { type: GraphQLInt },
     title: { type: GraphQLString },
     content: { type: GraphQLString },
     author: { type: GraphQLString },
@@ -58,7 +59,7 @@ const RootQuery = new GraphQLObjectType({
     },
     post: {
       type: PostType,
-      args: { id: { type: GraphQLString } },
+      args: { id: { type: GraphQLInt } },
       resolve(parent, args) {
         return posts.find(post => post.id === args.id);
       }
