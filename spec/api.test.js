@@ -5,14 +5,21 @@ describe("GET /", () => {
   let response;
   test("verify send many posts has authors", async () => {
     const query_string = `{
-      posts{
-		title
-	  }
+		posts{
+			id,
+			title,
+			content,
+			author,
+			related {
+				id,
+				name,
+				email
+			}
+		}
     }`;
     response = await request(app)
       .post("/graphql")
       .send({ query: query_string });
-    console.log(response.body.data);
     expect(response.body.data.posts[0].title).toBe("My first blog post");
     console.log(response.body);
   });
