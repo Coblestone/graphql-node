@@ -13,7 +13,6 @@ describe("GET /", () => {
       .post("/graphql")
       .send({ query: query_string });
     expect(response.body.data.posts[0].title).toBe("My first blog post");
-    // console.log(response.body);
   });
 
   test("Verify that an author is related to a post", async () => {
@@ -28,13 +27,10 @@ describe("GET /", () => {
         }
       }
     }`;
-
     response = await request(app)
       .post("/graphql")
       .send({ query: query_string });
-    // console.log(response.body.data);
     expect(response.body.data.posts[0].related.name).toBe("Xavier Decuyper");
-    // console.log(response.body);
   });
 
   test("Verify there is many authors", async () => {
@@ -47,24 +43,27 @@ describe("GET /", () => {
     response = await request(app)
       .post("/graphql")
       .send({ query: query_string });
-    // console.log(response.body.data);
     expect(response.body.data.authors[0].name).toBe("Xavier Decuyper");
-    // console.log(response.body);
   });
 
   test("Verify we can get just one author", async () => {
     const query_string = `{
-      authors {
-        name,
-        email
-      }
-    }`;
-
+		author(id: "88d6bec2") {
+			name,
+			email,
+			posts {
+				id 
+				title
+				content
+			}
+		}
+	}`;
     response = await request(app)
       .post("/graphql")
       .send({ query: query_string });
-    // console.log(response.body.data);
-    expect(response.body.data.authors[0].name).toBe("Xavier Decuyper");
+    console.log(response.body.data.author.posts);
+    expect(response.body.data.author.name).toBe("Xavier Decuyper");
+    expect(response.body.data.author.posts[0].title).toBe("My first blog post");
   });
 
   test("Verify we can get just one post", async () => {
@@ -74,11 +73,9 @@ describe("GET /", () => {
 			content
 		}
 	}`;
-
     response = await request(app)
       .post("/graphql")
       .send({ query: query_string });
-    //console.log(response.body);
     expect(response.body.data.post.title).toBe("My first blog post");
   });
 });
